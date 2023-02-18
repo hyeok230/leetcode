@@ -1,71 +1,27 @@
 class Solution {
 public:
-    bool check_row(vector<vector<char>>& board)
-    {
-        for (int i = 0; i < 9; i++)
-        {
-            unordered_map<char, int> m;
-            for (int j = 0; j < 9; j++)
-            {
-                if (board[i][j] != '.' && m[board[i][j]])
-                    return false;
-                else 
-                    m[board[i][j]] = 1;
-            }
-        }
-        return true;
-    }
-    
-    bool check_column(vector<vector<char>>& board)
-    {
-        for (int i = 0; i < 9; i++)
-        {
-            unordered_map<char, int> m;
-            for (int j = 0; j < 9; j++)
-            {
-                if (board[j][i] != '.' && m[board[j][i]])
-                    return false;
-                else 
-                    m[board[j][i]] = 1;
-            }
-        }
-        return true;
-    }
-    
-    bool check_square(vector<vector<char>>& board)
-    {
-        int list1[3] = {0, 3, 6};
-        int list2[3] = {0, 3, 6};
-        for (int i = 0; i < 3; i++)
-        {
-            for (int j = 0; j < 3; j++)
-            {
-                unordered_map<char, int> m;
-                int x = list1[i];
-                int y = list2[j];
-                for (int a = x; a < x + 3; a++)
-                {
-                    for (int b = y; b < y + 3; b++)
-                    {
-                        if (board[a][b] != '.' && m[board[a][b]])
-                            return false;
-                        else
-                            m[board[a][b]] = 1;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-    
     bool isValidSudoku(vector<vector<char>>& board) {
+        unordered_set<char> row_visited[9];
+        unordered_set<char> column_visited[9];
+        unordered_set<char> square_visited[3][3];
         
-        if (!check_row(board))
-            return false;
-        if (!check_column(board))
-            return false;
-        if (!check_square(board))
-            return false;
+        for (int i = 0; i < 9; i++)
+        {
+            for (int j = 0; j < 9; j++)
+            {
+                char c = board[i][j];
+                
+                if (c != '.')
+                {
+                    if (row_visited[i].count(c) || column_visited[j].count(c) || square_visited[i/3][j/3].count(c))
+                        return false;
+                }
+                
+                row_visited[i].insert(c);
+                column_visited[j].insert(c);
+                square_visited[i/3][j/3].insert(c);
+            }
+        }
         return true;
     }
 };
