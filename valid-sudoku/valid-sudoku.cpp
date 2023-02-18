@@ -5,10 +5,9 @@ public:
         for (int i = 0; i < 9; i++)
         {
             unordered_map<char, int> m;
-            m.clear();
             for (int j = 0; j < 9; j++)
             {
-                if (board[i][j] != '.' && m.count(board[i][j]))
+                if (board[i][j] != '.' && m[board[i][j]])
                     return false;
                 else 
                     m[board[i][j]] = 1;
@@ -22,10 +21,9 @@ public:
         for (int i = 0; i < 9; i++)
         {
             unordered_map<char, int> m;
-            m.clear();
             for (int j = 0; j < 9; j++)
             {
-                if (board[j][i] != '.' && m.count(board[j][i]))
+                if (board[j][i] != '.' && m[board[j][i]])
                     return false;
                 else 
                     m[board[j][i]] = 1;
@@ -43,14 +41,13 @@ public:
             for (int j = 0; j < 3; j++)
             {
                 unordered_map<char, int> m;
-                m.clear();
                 int x = list1[i];
                 int y = list2[j];
                 for (int a = x; a < x + 3; a++)
                 {
                     for (int b = y; b < y + 3; b++)
                     {
-                        if (board[a][b] != '.' && m.count(board[a][b]))
+                        if (board[a][b] != '.' && m[board[a][b]])
                             return false;
                         else
                             m[board[a][b]] = 1;
