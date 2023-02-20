@@ -1,18 +1,13 @@
 class Solution {
 public:
     bool isPalindrome(string s) {
-        string str1 = "", str2 = "";
-        for (int i = 0; i < s.size(); i++)
+        for (int i = 0, j = s.size() - 1; i < j; i++, j--)
         {
-            if (isalpha(s[i]) || isdigit(s[i]))
-            {
-                str1 += tolower(s[i]);
-                str2 += tolower(s[i]);
-            }
+            while (!isalnum(s[i]) && i < j) i++;
+            while (!isalnum(s[j]) && i < j) j--;
+            if (tolower(s[i]) != tolower(s[j]))
+                return false;
         }
-        reverse(str2.begin(), str2.end());
-        if (str1 == str2)
-            return true;
-        return false;
+        return true;
     }
 };
