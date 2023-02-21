@@ -9,22 +9,55 @@
  * };
  */
 class Solution {
-public:
-    ListNode *frontNode;
-    
-    bool recursiveN(ListNode* node)
+private:
+    ListNode* half(ListNode *head)
     {
-        if (node != NULL)
+        ListNode* fast = head;
+        ListNode* slow = head;
+        
+        while (fast->next && fast->next->next)
         {
-            if (!recursiveN(node->next)) return false;
-            if (frontNode->val != node->val) return false;
-            frontNode = frontNode->next;
+            fast = fast->next->next;
+            slow = slow->next;
         }
-        return true;
+        return slow;
     }
     
-    bool isPalindrome(ListNode* head) {    
-        frontNode = head;
-        return recursiveN(head);
+    ListNode* reverseList(ListNode* head)
+    {
+        ListNode* preNode = NULL;
+        ListNode* currNode = head;
+        
+        while (currNode)
+        {
+            ListNode* nextNode = currNode->next;
+            currNode->next = preNode;
+            preNode = currNode;
+            currNode = nextNode;
+        }
+        
+        return preNode;
+    }
+public:
+    bool isPalindrome(ListNode* head) {
+        
+        if (head == NULL) return false;
+        
+        ListNode* beforeHalf = half(head);
+        ListNode* secondList = reverseList(beforeHalf->next);
+        
+        ListNode* p1 = head;
+        ListNode* p2 = secondList;
+        
+        bool result = true;
+        while (result && p2)
+        {
+            if (p1->val != p2->val) result = false;
+            p1 = p1->next;
+            p2 = p2->next;
+        }
+        
+        beforeHalf->next = reverseList(secondList);
+        return result;
     }
 };
