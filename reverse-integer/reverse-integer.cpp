@@ -1,26 +1,18 @@
 class Solution {
 public:
     int reverse(int x) {
-        long long n = x;
-        bool flag = false;
-         if (n < 0)
-        {
-            flag = true;
-            n *= -1;
-        }
-        string s = to_string(n);
-        string sMax = to_string(INT_MAX);
-        string sMin = to_string(INT_MIN);
-        std::reverse(s.begin(), s.end());
-        if (flag)
-        {
-            s.insert(0, "-");
-            if (s.size() >= sMin.size() && s > sMin)
-                return 0;
-        } else {
-            if (s.size() >= sMax.size() && s > sMax)
-                return 0;
-        }
-        return stoi(s);
+        int flag = 0;
+        if (x < 0)
+            flag = 1;
+        string str = to_string(x);
+        string int_max = to_string(INT_MAX);
+        string int_min = to_string(INT_MIN);
+        std::reverse(str.begin() + flag, str.end());
+        if (str.size() == int_min.size() && str > int_min)
+            return 0;
+        if (flag == 0 && str.size() == int_max.size() && str > int_max)
+            return 0;
+        int ret = stoi(str);
+        return ret;
     }
 };
