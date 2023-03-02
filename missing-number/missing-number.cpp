@@ -2,13 +2,12 @@ class Solution {
 public:
     int missingNumber(vector<int>& nums) {
         int n = nums.size();
-        int bit = 0;
+        int bit = n;
         for (int i = 0; i < n; i++)
         {
             bit ^= nums[i];
             bit ^= i;
         }
-        bit ^= n;
         return bit;
     }
 };
