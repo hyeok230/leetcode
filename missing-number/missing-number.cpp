@@ -2,9 +2,12 @@ class Solution {
 public:
     int missingNumber(vector<int>& nums) {
         int n = nums.size();
-        int sum = n * (n + 1) / 2;
+        int bit = n;
         for (int i = 0; i < n; i++)
-            sum -= nums[i];
-        return sum;
+        {
+            bit ^= nums[i];
+            bit ^= i;
+        }
+        return bit;
     }
 };
